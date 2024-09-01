@@ -1,7 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MultiSelectDropdown from "./MultiSelectDropdown";
+import Toast from "../Toast/Toast";
 
-const BorrowingRuleCard = () => {
+interface props {
+  rule_id: string;
+  competition_id: string;
+  enabled: number;
+  appliesForDivision: string[] | null;
+  borrowing_rule_id: string;
+  canBorrow: number;
+  competitionsAllowed: string[] | null;
+  divisionsAllowed: string[] | null;
+}
+
+const BorrowingRuleCard = ({
+  rule_id,
+  competition_id,
+  enabled,
+  borrowing_rule_id,
+  canBorrow,
+  appliesForDivision,
+  competitionsAllowed,
+  divisionsAllowed,
+}: props) => {
+  const [toast, setToast] = useState(false);
+
+  const [rule, setRule] = useState({
+    id: rule_id || "",
+    competition_id: competition_id || "",
+    enabled: enabled || 1,
+    applies_for_division_id: appliesForDivision || [],
+  });
+
+  const [borrowingRule, setBorrowingRule] = useState({
+    borrowing_rule_id: borrowing_rule_id || "",
+    rule_id: rule_id || "",
+    can_borrow: canBorrow || 1,
+    competitions_allowed: competitionsAllowed || [],
+    divisions_allowed: divisionsAllowed || [],
+  });
+
   const divisionOptionsArray = [
     {
       name: "Open Men's",
@@ -36,6 +74,32 @@ const BorrowingRuleCard = () => {
     },
   ];
 
+  useEffect(() => {
+    setRule({
+      id: rule_id || "",
+      competition_id: competition_id || "",
+      enabled: enabled || 1,
+      applies_for_division_id: appliesForDivision || [],
+    });
+
+    setBorrowingRule({
+      borrowing_rule_id: borrowing_rule_id || "",
+      rule_id: rule_id || "",
+      can_borrow: canBorrow || 0,
+      competitions_allowed: competitionsAllowed || [],
+      divisions_allowed: divisionsAllowed || [],
+    });
+  }, [
+    rule_id,
+    competition_id,
+    enabled,
+    appliesForDivision,
+    borrowing_rule_id,
+    canBorrow,
+    competitionsAllowed,
+    divisionsAllowed,
+  ]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between gap-8">
@@ -44,20 +108,44 @@ const BorrowingRuleCard = () => {
           <MultiSelectDropdown
             dropDownFor={"Divisions"}
             optionObjectData={divisionOptionsArray}
+            currentData={rule.applies_for_division_id}
           />
         </div>
         <div className="flex-1 flex flex-col gap-4 text-sm">
           <div className="flex gap-2">
-            <input type="radio" name="allDivisions" />
-            <label htmlFor="allDivisions">Borrowing</label>
-            <input type="radio" name="allDivisions" />
-            <label htmlFor="allDivisions">Not Borrowing</label>
+            <input
+              type="radio"
+              name={borrowingRule.borrowing_rule_id}
+              id={borrowingRule.borrowing_rule_id + "1"}
+              value="canBorrow"
+              checked={borrowingRule.can_borrow === 1}
+              onChange={() =>
+                setBorrowingRule({ ...borrowingRule, can_borrow: 1 })
+              }
+            />
+            <label htmlFor={borrowingRule.borrowing_rule_id + 1}>
+              Borrowing
+            </label>
+            <input
+              type="radio"
+              name={borrowingRule.borrowing_rule_id}
+              id={borrowingRule.borrowing_rule_id + "0"}
+              value="cannotBorrow"
+              checked={borrowingRule.can_borrow === 0}
+              onChange={() =>
+                setBorrowingRule({ ...borrowingRule, can_borrow: 0 })
+              }
+            />
+            <label htmlFor={borrowingRule.borrowing_rule_id + 0}>
+              Not Borrowing
+            </label>
           </div>
           <div className="flex-1 flex flex-col gap-4 text-sm">
             <div>Competitions players can be borrowed from:</div>
             <MultiSelectDropdown
               dropDownFor={"Competitions"}
               optionObjectData={competitionOptionsArray}
+              currentData={borrowingRule.competitions_allowed}
             />{" "}
           </div>
           <div className="flex-1 flex flex-col gap-4 text-sm">
@@ -65,13 +153,28 @@ const BorrowingRuleCard = () => {
             <MultiSelectDropdown
               dropDownFor={"Divisions"}
               optionObjectData={divisionOptionsArray}
+              currentData={borrowingRule.divisions_allowed}
             />{" "}
           </div>{" "}
         </div>
       </div>
-      <button className="text-red-500 border border-red-500 rounded-md text-sm p-1 hover:bg-red-600 hover:text-white">
+      <button
+        className="text-red-500 border border-red-500 rounded-md text-sm p-1 hover:bg-red-600 hover:text-white"
+        onClick={() => {
+          setToast(true);
+        }}
+      >
         Delete Rule
       </button>
+      {toast ? (
+        <Toast
+          heading={"We're working on it!"}
+          caption={"Rules are static for now, try query players!"}
+          animationEnd={() => setToast(false)}
+          type={"orange"}
+        />
+      ) : null}
+
       <div className="h-[1px] bg-gray-300"></div>
     </div>
   );

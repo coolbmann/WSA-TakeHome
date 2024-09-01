@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PrefixDropdown from "../components/EligiblePlayers/PrefixDropdown";
+import config from "../config/config";
 
 interface teamData {
   id: string;
@@ -25,7 +26,7 @@ const EligiblePlayers = () => {
   // GET teams data
   const getTeamData = async () => {
     try {
-      const response = await fetch("http://localhost:3005/teams");
+      const response = await fetch(`${config.api.baseURL}/teams`);
 
       if (!response.ok) {
         throw new Error(`Error at getTeamsData`);
@@ -47,7 +48,7 @@ const EligiblePlayers = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3005/players", {
+      const response = await fetch(`${config.api.baseURL}/players`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // This tells the server to expect JSON

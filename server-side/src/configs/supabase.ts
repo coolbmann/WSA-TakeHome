@@ -36,6 +36,13 @@ export type Database = {
             foreignKeyName: "borrowing_rules_rule_id_fkey";
             columns: ["rule_id"];
             isOneToOne: false;
+            referencedRelation: "all_rules";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "borrowing_rules_rule_id_fkey";
+            columns: ["rule_id"];
+            isOneToOne: false;
             referencedRelation: "rules";
             referencedColumns: ["id"];
           }
@@ -100,6 +107,13 @@ export type Database = {
           started_only?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: "finals_eligibility_rule_id_fkey";
+            columns: ["rule_id"];
+            isOneToOne: false;
+            referencedRelation: "all_rules";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "finals_eligibility_rule_id_fkey";
             columns: ["rule_id"];
@@ -286,6 +300,42 @@ export type Database = {
       };
     };
     Views: {
+      all_rules: {
+        Row: {
+          applies_for_division_id: string[] | null;
+          borrowing_rule_id: string | null;
+          can_borrow: number | null;
+          competition_id: string | null;
+          competitions_allowed: string[] | null;
+          divisions_allowed: string[] | null;
+          enabled: number | null;
+          id: string | null;
+          rule_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "borrowing_rules_rule_id_fkey";
+            columns: ["rule_id"];
+            isOneToOne: false;
+            referencedRelation: "rules";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "borrowing_rules_rule_id_fkey";
+            columns: ["rule_id"];
+            isOneToOne: false;
+            referencedRelation: "all_rules";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "rules_competition_id_fkey";
+            columns: ["competition_id"];
+            isOneToOne: false;
+            referencedRelation: "competition";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       teams_info: {
         Row: {
           competition_name: string | null;

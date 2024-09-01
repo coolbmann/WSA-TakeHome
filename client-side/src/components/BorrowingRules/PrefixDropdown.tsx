@@ -24,9 +24,7 @@ const PrefixDropdown = ({
   updateForm,
 }: props) => {
   const [active, setActive] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(
-    "791a0893-6cd2-495c-a06e-e7794d21c8c4"
-  );
+  const [selectedOption, setSelectedOption] = useState<string | null>("");
   const [searchInput, setSearchInput] = useState("");
   const [filteredOptions, setFilteredOptions] =
     useState<optionDataInterface[]>();

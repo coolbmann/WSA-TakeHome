@@ -5,12 +5,17 @@ import { IoClose } from "react-icons/io5";
 interface props {
   dropDownFor: string;
   optionObjectData: any[];
+  currentData: string[];
 }
 
-const MultiSelectDropdown = ({ dropDownFor, optionObjectData }: props) => {
+const MultiSelectDropdown = ({
+  dropDownFor,
+  optionObjectData,
+  currentData,
+}: props) => {
   const [active, setActive] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-  const [selectedOptionIds, setSelectednOptionIds] = useState<any[] | null>([]);
+  const [selectedOptionIds, setSelectedOptionIds] = useState<any[] | null>([]);
 
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -105,6 +110,27 @@ const MultiSelectDropdown = ({ dropDownFor, optionObjectData }: props) => {
     };
   }, [active]);
 
+  // On load, sync UI with latest ID array state
+  useEffect(() => {
+    const matchId = () => {
+      const idArray = currentData.map((item) => {
+        const matchingId = optionData.find((element) => element.id === item);
+        return matchingId ? matchingId.name : null;
+      });
+      return idArray;
+    };
+
+    if (currentData?.length === 0) {
+      setSelectedOptions([]);
+    } else {
+      setSelectedOptions(matchId());
+    }
+  }, [currentData]);
+
+  useEffect(() => {
+    console.log(currentData);
+  }, [currentData]);
+
   // Keep ID array state in sync with UI
   useEffect(() => {
     const matchId = () => {
@@ -117,9 +143,9 @@ const MultiSelectDropdown = ({ dropDownFor, optionObjectData }: props) => {
     };
 
     if (selectedOptions.length === 0) {
-      setSelectednOptionIds(null);
+      setSelectedOptionIds(null);
     } else {
-      setSelectednOptionIds(matchId());
+      setSelectedOptionIds(matchId());
     }
   }, [selectedOptions]);
 
