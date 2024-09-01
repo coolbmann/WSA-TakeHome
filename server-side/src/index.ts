@@ -11,7 +11,7 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://wsa-take-home.bryanherijanto.com",
+    origin: "https://www.wsa-take-home.bryanherijanto.com",
   })
 );
 
