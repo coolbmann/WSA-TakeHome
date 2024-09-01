@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BorrowingRuleCard from "../components/BorrowingRules/BorrowingRuleCard";
 import PrefixDropdown from "../components/BorrowingRules/PrefixDropdown";
 import Toast from "../components/Toast/Toast";
