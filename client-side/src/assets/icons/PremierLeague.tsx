@@ -1,4 +1,3 @@
-import React from "react";
 import premierLeagueImage from "./PremierLeague.jpg";
 
 const PremierLeagueIcon = () => {

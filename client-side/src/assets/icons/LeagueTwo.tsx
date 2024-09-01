@@ -1,4 +1,3 @@
-import React from "react";
 import leagueTwoImage from "./LeagueTwo.jpeg";
 
 const LeagueTwo = () => {

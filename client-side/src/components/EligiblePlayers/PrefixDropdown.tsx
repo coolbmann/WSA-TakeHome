@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import PremierLeagueIcon from "../../assets/icons/PremierLeague";
-import ShuteShield from "../../assets/icons/ShuteShield";
-import LeagueTwo from "../../assets/icons/LeagueTwo";
 
 interface props {
   placeholder: string;

@@ -1,4 +1,3 @@
-import React from "react";
 import shuteShieldImage from "./ShuteShield.jpg";
 
 const ShuteShield = () => {

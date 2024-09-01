@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./toast.module.css";
 import { PiWarningCircleFill } from "react-icons/pi";
 

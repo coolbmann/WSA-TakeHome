@@ -136,6 +136,8 @@ const BorrowingRules = () => {
     })();
 
     renderRuleCards();
+
+    console.log(ruleData, borrowingRuleData);
   }, []);
 
   useEffect(() => {
